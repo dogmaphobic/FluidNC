@@ -27,6 +27,10 @@
 #include "UserOutputs.h"
 #include "Macros.h"
 
+#if defined(USE_INA219)
+#   include "../ina219.h"
+#endif
+
 namespace Machine {
     using ::Kinematics::Kinematics;
 
@@ -73,6 +77,10 @@ namespace Machine {
         Parking*              _parking        = nullptr;
         OLED*                 _oled           = nullptr;
         Spindles::SpindleList _spindles;
+
+#if defined(USE_INA219)
+        INA219*               _ina219         = nullptr;
+#endif
 
         UartChannel* _uart_channels[MAX_N_UARTS] = { nullptr };
         Uart*        _uarts[MAX_N_UARTS]         = { nullptr };

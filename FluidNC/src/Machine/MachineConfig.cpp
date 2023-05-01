@@ -65,7 +65,9 @@ namespace Machine {
         handler.section("user_outputs", _userOutputs);
 
         handler.section("oled", _oled);
-
+#if defined(USE_INA219)
+        handler.section("ina219", _ina219);
+#endif
         Spindles::SpindleFactory::factory(handler, _spindles);
 
         // TODO: Consider putting these under a gcode: hierarchy level? Or motion control?

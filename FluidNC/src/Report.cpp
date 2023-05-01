@@ -45,6 +45,10 @@
 EspClass esp;
 #endif
 
+#if defined(USE_INA219)
+#   include "ina219.h"
+#endif
+
 portMUX_TYPE mmux = portMUX_INITIALIZER_UNLOCKED;
 
 void _notify(const char* title, const char* msg) {
@@ -644,6 +648,11 @@ void report_realtime_status(Channel& channel) {
 #endif
 #ifdef DEBUG_REPORT_HEAP
     msg << "|Heap:" << esp.getHeapSize();
+#endif
+#if defined(USE_INA219)
+    if (config->_ina219) {
+        config->_ina219->report_realtime_status(msg);
+    }
 #endif
     msg << ">";
     // The DebugStream destructor sends the line

@@ -25,6 +25,10 @@
 #    include "WebUI/WifiConfig.h"
 #    include "Driver/localfs.h"
 
+#if defined(USE_INA219)
+#    include "ina219.h"
+#endif
+
 extern void make_user_commands();
 
 void setup() {
@@ -95,6 +99,12 @@ void setup() {
             if (config->_oled) {
                 config->_oled->init();
             }
+
+#if defined(USE_INA219)
+            if (config->_ina219) {
+                config->_ina219->init();
+            }
+#endif
 
             config->_stepping->init();  // Configure stepper interrupt timers
 

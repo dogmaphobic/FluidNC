@@ -19,6 +19,10 @@
 #include "Settings.h"       // settings_execute_startup
 #include "Machine/LimitPin.h"
 
+#if defined(USE_INA219)
+#   include "ina219.h"
+#endif
+
 volatile ExecAlarm rtAlarm;  // Global realtime executor bitflag variable for setting various alarms.
 
 std::map<ExecAlarm, const char*> AlarmNames = {
@@ -309,6 +313,12 @@ void protocol_main_loop() {
             idleEndTime = 0;  //
             config->_axes->set_disable(true);
         }
+
+        #if defined(USE_INA219)
+        if (config->_ina219) {
+            config->_ina219->loop();
+        }
+        #endif
     }
     return; /* Never reached */
 }
